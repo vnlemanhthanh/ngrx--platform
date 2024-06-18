@@ -1,6 +1,6 @@
 import { isSignal } from '@angular/core';
 import { patchState, signalStore, type } from '@ngrx/signals';
-import { addEntities, withEntities } from '../src';
+import { addEntities, entityMeta, withEntities } from '../src';
 import { Todo, todo2, todo3, User, user1, user2 } from './mocks';
 import { selectTodoId } from './helpers';
 
@@ -48,11 +48,11 @@ describe('withEntities', () => {
   });
 
   it('combines multiple entity features', () => {
-    const todoMeta = {
+    const todoMeta = entityMeta({
       entity: type<Todo>(),
       collection: 'todo',
       selectId: selectTodoId,
-    } as const;
+    });
 
     const Store = signalStore(withEntities<User>(), withEntities(todoMeta));
     const store = new Store();

@@ -1,5 +1,5 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
-import { addEntities, removeEntity, withEntities } from '../../src';
+import { addEntities, entityMeta, removeEntity, withEntities } from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2 } from '../mocks';
 import { selectTodoId } from '../helpers';
 
@@ -37,11 +37,11 @@ describe('removeEntity', () => {
   });
 
   it('removes entity from specified collection', () => {
-    const todoMeta = {
+    const todoMeta = entityMeta({
       entity: type<Todo>(),
       collection: 'todo',
       selectId: selectTodoId,
-    } as const;
+    });
 
     const Store = signalStore(withEntities(todoMeta));
     const store = new Store();

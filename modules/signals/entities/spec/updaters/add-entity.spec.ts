@@ -1,5 +1,5 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
-import { addEntity, withEntities } from '../../src';
+import { addEntity, entityMeta, withEntities } from '../../src';
 import { Todo, todo1, todo2, User, user1, user2 } from '../mocks';
 import { selectTodoId as selectId } from '../helpers';
 
@@ -167,11 +167,11 @@ describe('addEntity', () => {
   });
 
   it('does not add entity with a custom id to the specified collection if it already exists', () => {
-    const todoMeta = {
+    const todoMeta = entityMeta({
       entity: type<Todo>(),
       collection: 'todo',
       selectId,
-    } as const;
+    });
 
     const Store = signalStore(withEntities(todoMeta));
     const store = new Store();

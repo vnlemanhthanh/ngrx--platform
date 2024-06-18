@@ -1,5 +1,10 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
-import { addEntities, removeEntities, withEntities } from '../../src';
+import {
+  addEntities,
+  entityMeta,
+  removeEntities,
+  withEntities,
+} from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2, user3 } from '../mocks';
 import { selectTodoId } from '../helpers';
 
@@ -60,10 +65,10 @@ describe('removeEntities', () => {
   });
 
   it('removes entities by ids from specified collection', () => {
-    const userMeta = {
+    const userMeta = entityMeta({
       entity: type<User>(),
       collection: 'users',
-    } as const;
+    });
 
     const Store = signalStore(withEntities(userMeta));
     const store = new Store();
@@ -77,10 +82,10 @@ describe('removeEntities', () => {
   });
 
   it('removes entities by predicate from specified collection', () => {
-    const userMeta = {
+    const userMeta = entityMeta({
       entity: type<User>(),
       collection: 'users',
-    } as const;
+    });
 
     const Store = signalStore(withEntities(userMeta));
     const store = new Store();
@@ -97,11 +102,11 @@ describe('removeEntities', () => {
   });
 
   it('does not modify entity state if entities do not exist in specified collection', () => {
-    const todoMeta = {
+    const todoMeta = entityMeta({
       entity: type<Todo>(),
       collection: 'todo',
       selectId: selectTodoId,
-    } as const;
+    });
 
     const Store = signalStore(withEntities(todoMeta));
     const store = new Store();

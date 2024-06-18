@@ -1,5 +1,5 @@
 import { patchState, signalStore, type } from '@ngrx/signals';
-import { setAllEntities, withEntities } from '../../src';
+import { entityMeta, setAllEntities, withEntities } from '../../src';
 import { Todo, todo1, todo2, todo3, User, user1, user2, user3 } from '../mocks';
 import { selectTodoId as selectId } from '../helpers';
 
@@ -82,11 +82,11 @@ describe('setAllEntities', () => {
   });
 
   it('replaces specified entity collection with provided entities with a custom id', () => {
-    const todoMeta = {
+    const todoMeta = entityMeta({
       entity: type<Todo>(),
       collection: 'todo',
       selectId,
-    } as const;
+    });
 
     const Store = signalStore(withEntities(todoMeta));
     const store = new Store();
